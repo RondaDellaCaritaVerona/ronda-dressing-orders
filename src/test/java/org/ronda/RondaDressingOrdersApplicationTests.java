@@ -9,7 +9,5 @@ import org.springframework.context.annotation.Import;
 class RondaDressingOrdersApplicationTests {
 
   @Test
-  void contextLoads() {
-  }
-
+  void contextLoads() {}
 }

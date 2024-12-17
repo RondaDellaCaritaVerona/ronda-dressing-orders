@@ -9,5 +9,4 @@ public class RondaDressingOrdersApplication {
   public static void main(String[] args) {
     SpringApplication.run(RondaDressingOrdersApplication.class, args);
   }
-
 }
