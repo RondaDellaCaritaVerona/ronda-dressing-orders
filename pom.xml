@@ -48,6 +48,20 @@
       <artifactId>spring-boot-starter-webflux</artifactId>
     </dependency>
 
+    <!--  Database versioning - start  -->
+    <dependency>
+      <groupId>org.flywaydb</groupId>
+      <artifactId>flyway-core</artifactId>
+      <version>10.18.0</version>
+    </dependency>
+    <dependency>
+      <groupId>org.flywaydb</groupId>
+      <artifactId>flyway-database-postgresql</artifactId>
+      <version>10.18.0</version>
+      <scope>runtime</scope>
+    </dependency>
+    <!--  Database versioning - end  -->
+
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-devtools</artifactId>

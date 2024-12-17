@@ -11,7 +11,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.proxy.HibernateProxy;
@@ -21,20 +20,20 @@ import org.hibernate.proxy.HibernateProxy;
 @Getter
 @Setter
 @ToString
-@RequiredArgsConstructor
 @AllArgsConstructor
 @NoArgsConstructor
 public class OrderArticle {
 
-  @EmbeddedId private OrderArticleKey id;
+  @EmbeddedId
+  private OrderArticleKey id;
 
   @ManyToOne
-  @MapsId("order_id")
-  @JoinColumn(nullable = false)
+  @MapsId("orderId")
+  @JoinColumn(name = "order_id", nullable = false)
   private Order order;
 
   @ManyToOne
-  @MapsId("article_Id")
+  @MapsId("articleId")
   @JoinColumn(name = "article_id", nullable = false)
   private Article article;
 

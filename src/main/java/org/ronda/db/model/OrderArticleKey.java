@@ -8,9 +8,6 @@ import lombok.Data;
 @Embeddable
 public class OrderArticleKey {
 
-  @Column(name = "order_id")
   private String orderId;
-
-  @Column(name = "article_id")
   private String articleId;
 }

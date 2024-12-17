@@ -10,7 +10,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.proxy.HibernateProxy;
@@ -20,17 +19,17 @@ import org.hibernate.proxy.HibernateProxy;
 @Getter
 @Setter
 @ToString
-@RequiredArgsConstructor
 @AllArgsConstructor
 @NoArgsConstructor
 public class Order {
 
-  @Id private String orderId;
+  @Id
+  private String orderId;
 
   private Date orderDate;
 
   @ManyToOne
-  @JoinColumn(name = "guest_id")
+  @JoinColumn(name = "card_number")
   private Guest guest;
 
   @ManyToOne
