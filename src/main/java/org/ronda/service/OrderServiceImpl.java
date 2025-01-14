@@ -1,10 +1,10 @@
 package org.ronda.service;
 
 import org.ronda.dto.OrderDto;
-import org.ronda.model.Guest;
-import org.ronda.model.Order;
-import org.ronda.model.OrderState;
-import org.ronda.repository.OrderRepository;
+import org.ronda.db.model.Guest;
+import org.ronda.db.model.Order;
+import org.ronda.db.model.OrderState;
+import org.ronda.db.repository.OrderRepository;
 import org.ronda.mapper.OrderMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,7 +13,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -39,7 +38,7 @@ public class OrderServiceImpl implements OrderService {
                         (order.getGuest() != null && order.getGuest().getCardNumber() != null 
                         && order.getGuest().getCardNumber().equals(cardNumber)))
                 // Filter by order state
-                .filter(order -> orderState == null || order.getState().getName().equalsIgnoreCase(orderState))
+                .filter(order -> orderState == null || order.getState().equals(orderState))
                 // Filter by date range
                 .filter(order -> {
                     if (fromDate == null && toDate == null) return true;
