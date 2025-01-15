@@ -23,8 +23,7 @@ import org.hibernate.proxy.HibernateProxy;
 @NoArgsConstructor
 public class Order {
 
-  @Id
-  private String orderId;
+  @Id private String orderId;
 
   private Date orderDate;
 

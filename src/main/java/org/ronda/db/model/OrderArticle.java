@@ -24,8 +24,7 @@ import org.hibernate.proxy.HibernateProxy;
 @NoArgsConstructor
 public class OrderArticle {
 
-  @EmbeddedId
-  private OrderArticleKey id;
+  @EmbeddedId private OrderArticleKey id;
 
   @ManyToOne
   @MapsId("orderId")

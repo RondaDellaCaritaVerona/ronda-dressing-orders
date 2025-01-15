@@ -1,6 +1,5 @@
 package org.ronda.db.model;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import lombok.Data;
 

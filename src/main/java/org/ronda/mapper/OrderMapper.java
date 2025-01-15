@@ -1,76 +1,56 @@
 package org.ronda.mapper;
 
-import org.ronda.dto.OrderDto;
+import java.util.Objects;
+import java.util.Optional;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import org.ronda.db.model.Guest;
-import org.ronda.db.model.OrderState;
 import org.ronda.db.model.Order;
-import org.ronda.db.repository.OrderStateRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.ronda.db.model.OrderState;
+import org.ronda.dto.OrderDto;
 
-@Component
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class OrderMapper {
 
-    @Autowired
-    private OrderStateRepository orderStateRepository;
-
-
-    // Map Order entity to OrderDto
-    public OrderDto toDto(Order order) {
-        if (order == null) {
-            return null;
-        }
-        
-        OrderDto dto = new OrderDto();
-        dto.setOrderId(order.getOrderId());
-        dto.setOrderDate(order.getOrderDate());
-        
-        // Map Guest to guestId (cardNumber)
-        if (order.getGuest() != null) {
-            dto.setGuestId(order.getGuest().getCardNumber());  // Map cardNumber to guestId
-        }
-
-        // Map OrderState to state name
-        if (order.getState() != null) {
-            dto.setOrderState(order.getState().getDescription());
-        }
-
-        return dto;
+  // Map Order entity to OrderDto
+  public static Optional<OrderDto> toDto(Order order) {
+    if (Objects.isNull(order)) {
+      return Optional.empty();
     }
 
-    // Map OrderDto to Order entity
-    public Order toEntity(OrderDto orderDto) {
-        if (orderDto == null) {
-            return null;
-        }
+    var dtoBuilder = OrderDto.builder();
+    dtoBuilder.orderId(order.getOrderId());
+    dtoBuilder.orderDate(order.getOrderDate());
 
-        Order order = new Order();
-        order.setOrderId(orderDto.getOrderId());
-        order.setOrderDate(orderDto.getOrderDate());
+    // Map Guest to guestId (cardNumber)
+    Optional.ofNullable(order.getGuest()).map(Guest::getCardNumber).ifPresent(dtoBuilder::guestId);
 
-        // Convert guestId (cardNumber) into a Guest object
-        if (orderDto.getGuestId() != null) {
-            Guest guest = new Guest();
-            guest.setCardNumber(orderDto.getGuestId());  // Set cardNumber based on guestId
-            order.setGuest(guest);
-        }
+    // Map OrderState to state name
+    Optional.ofNullable(order.getState())
+        .map(OrderState::getDescription)
+        .ifPresent(dtoBuilder::orderState);
 
-        // Convert orderState to OrderState object
-        if (orderDto.getOrderState() != null) {
-            OrderState state = new OrderState();
-            state.setDescription(orderDto.getOrderState());
-            order.setState(state);
-        }
+    return Optional.of(dtoBuilder.build());
+  }
 
-        return order;
+  // Map OrderDto to Order entity
+  public static Optional<Order> toEntity(OrderDto orderDto) {
+    if (Objects.isNull(orderDto)) {
+      return Optional.empty();
     }
 
-    public OrderState toOrderStateEntity(String orderStateString) {
-        if (orderStateString == null) {
-            return null;
-        }
+    var order = new Order();
+    order.setOrderId(orderDto.orderId());
+    order.setOrderDate(orderDto.orderDate());
 
-        return orderStateRepository.findByDescription(orderStateString)
-                .orElseThrow(() -> new IllegalArgumentException("Unknown order state: " + orderStateString));
-    }
+    // Convert guestId (cardNumber) into a Guest object
+    Optional.ofNullable(orderDto.guestId())
+        .ifPresent(guestId -> order.setGuest(Guest.builder().cardNumber(guestId).build()));
+
+    // Convert orderState to OrderState object
+    Optional.ofNullable(orderDto.orderState())
+        .ifPresent(orderSate -> OrderState.builder().description(orderSate).build());
+
+    return Optional.of(order);
+  }
 }
