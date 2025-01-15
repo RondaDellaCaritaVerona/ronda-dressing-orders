@@ -28,22 +28,14 @@ public class OrderController {
   // Get order by ID
   @GetMapping("/{id}")
   public ResponseEntity<OrderDto> getOrderById(@PathVariable String id) {
-<<<<<<< Updated upstream
-    OrderDto order = orderService.getOrderById(id);
-=======
     var order = orderService.getOrderById(id);
->>>>>>> Stashed changes
     return ResponseEntity.ok(order);
   }
 
   // Create a new order
   @PostMapping
   public ResponseEntity<OrderDto> createOrder(@RequestBody OrderDto orderDto) {
-<<<<<<< Updated upstream
-    OrderDto createdOrder = orderService.createOrder(orderDto);
-=======
     var createdOrder = orderService.createOrder(orderDto);
->>>>>>> Stashed changes
     return ResponseEntity.ok(createdOrder);
   }
 
@@ -51,11 +43,7 @@ public class OrderController {
   @PutMapping("/{id}")
   public ResponseEntity<OrderDto> updateOrder(
       @PathVariable String id, @RequestBody OrderDto orderDto) {
-<<<<<<< Updated upstream
-    OrderDto updatedOrder = orderService.updateOrder(id, orderDto);
-=======
     var updatedOrder = orderService.updateOrder(id, orderDto);
->>>>>>> Stashed changes
     return ResponseEntity.ok(updatedOrder);
   }
 
